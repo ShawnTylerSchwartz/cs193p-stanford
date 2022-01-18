@@ -4,6 +4,8 @@
 //
 //  Created by Shawn Schwartz on 1/17/22.
 //
+// Memory Game Model
+//
 
 import Foundation
 
