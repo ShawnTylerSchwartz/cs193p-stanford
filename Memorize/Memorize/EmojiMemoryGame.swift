@@ -4,7 +4,7 @@
 //
 //  Created by Shawn Schwartz on 1/17/22.
 //
-// ViewModel
+// This is the: ViewModel
 //
 
 import SwiftUI

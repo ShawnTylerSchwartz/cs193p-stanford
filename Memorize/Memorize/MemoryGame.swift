@@ -22,14 +22,15 @@ struct MemoryGame<CardContent> {
         // add numberOfPairsOfCards x 2 to cards array (to get the pairs)
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = createCardContent(pairIndex)
-            cards.append(Card(content: content))
-            cards.append(Card(content: content))
+            cards.append(Card(content: content, id: pairIndex*2))
+            cards.append(Card(content: content, id: pairIndex*2+1))
         }
     }
     
-    struct Card {
-        var isFaceUp: Bool = false
+    struct Card: Identifiable {
+        var isFaceUp: Bool = true
         var isMatched: Bool = false
         var content: CardContent // better to use a "don't care" type here, instead of a String, for flexibility in the future
+        var id: Int // for behaving like an Identifiable (a don't care, but needs to be hashable and equatable); Int is hashable
     }
 }
