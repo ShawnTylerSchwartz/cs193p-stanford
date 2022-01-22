@@ -13,19 +13,21 @@ struct MemoryGame<CardContent> {
     private(set) var cards: Array<Card>
     
     mutating func choose(_ card: Card) { // mutating will allow this to change *because self is immutable*
-        let chosenIndex = index(of: card)
-        cards[chosenIndex].isFaceUp.toggle()
+//        if let chosenIndex = index(of: card) { // if let to handle the potential some case with optionals, otherwise nil
+        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id}) {
+            cards[chosenIndex].isFaceUp.toggle()
+        }
         print("\(cards)")
     }
     
-    func index(of card: Card) -> Int { // (of) is the external name, (card) is internal name
-        for index in 0..<cards.count {
-            if cards[index].id == card.id {
-                return index
-            }
-        }
-        return 0
-    }
+//    func index(of card: Card) -> Int? { // (of) is the external name, (card) is internal name
+//        for index in 0..<cards.count {
+//            if cards[index].id == card.id {
+//                return index
+//            }
+//        }
+//        return nil
+//    }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
         cards = Array<Card>()
