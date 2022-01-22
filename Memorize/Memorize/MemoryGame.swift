@@ -14,10 +14,7 @@ struct MemoryGame<CardContent> {
     
     mutating func choose(_ card: Card) { // mutating will allow this to change *because self is immutable*
         let chosenIndex = index(of: card)
-//        var chosenCard = cards[chosenIndex] // this is a copy of cards, so we need to change cards directly
-//        chosenCard.isFaceUp.toggle()
         cards[chosenIndex].isFaceUp.toggle()
-//        print("chosenCard = \(chosenCard)")
         print("\(cards)")
     }
     
