@@ -9,12 +9,27 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> {
+// 'where CardContent: Equatable' allows us to use '==' to compare the .content of the two cards
+struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
+    
+    private var indexOfTheOneAndOnlyFaceUpCard: Int?
     
     mutating func choose(_ card: Card) { // mutating will allow this to change *because self is immutable*
         // if let to handle the potential some case with optionals, otherwise nil
-        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id}) {
+        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id}), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
+            if let potentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
+                if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+                    cards[chosenIndex].isMatched = true
+                    cards[potentialMatchIndex].isMatched = true
+                }
+                indexOfTheOneAndOnlyFaceUpCard = nil
+            } else {
+                for index in cards.indices {
+                    cards[index].isFaceUp = false
+                }
+                indexOfTheOneAndOnlyFaceUpCard = chosenIndex
+            }
             cards[chosenIndex].isFaceUp.toggle()
         }
         print("\(cards)")
@@ -32,7 +47,7 @@ struct MemoryGame<CardContent> {
     }
     
     struct Card: Identifiable {
-        var isFaceUp: Bool = true
+        var isFaceUp: Bool = false // in the game all cards start face down
         var isMatched: Bool = false
         var content: CardContent // better to use a "don't care" type here, instead of a String, for flexibility in the future
         var id: Int // for behaving like an Identifiable (a don't care, but needs to be hashable and equatable); Int is hashable
