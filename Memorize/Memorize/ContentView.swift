@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    let viewModel: EmojiMemoryGame // might instead call this something like 'game' instead of 'viewModel'
+    // @ObservedObject: when something changes, rebuild the entire body
+    @ObservedObject var viewModel: EmojiMemoryGame // might instead call this something like 'game' instead of 'viewModel'
     
 //    var emojis = ["🐶", "🐱",  "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐷", "🐸", "🐵", "🐔", "🐧", "🐤", "🐣", "🦆", "🦉", "🐴", "🦄", "🦋", "🐠"]
 //    @State var emojiCount = 20
@@ -20,6 +21,10 @@ struct ContentView: View {
                     ForEach(viewModel.model.cards) { card in
                         CardView(card: card)
                             .aspectRatio(2/3, contentMode: .fit)
+                            .onTapGesture {
+                                // here we are expressing user's intent to flip over a card
+                                viewModel.choose(card)
+                            }
                     }
                 }
             }
