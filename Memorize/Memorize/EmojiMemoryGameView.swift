@@ -12,20 +12,24 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame // might instead call this something like 'game' instead of 'game'
     
     var body: some View {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(game.model.cards) { card in
-                        CardView(card)
-                            .aspectRatio(2/3, contentMode: .fit)
-                            .onTapGesture {
-                                // here we are expressing user's intent to flip over a card
-                                game.choose(card)
-                            }
-                    }
-                }
-            }
+        AspectVGrid(items: game.model.cards, aspectRatio: 2/3) { card in
+            cardView(for: card)
+        }
             .foregroundColor(.red)
             .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    private func cardView(for card: EmojiMemoryGame.Card) -> some View {
+        if card.isMatched && !card.isFaceUp {
+            Rectangle().opacity(0)
+        } else {
+            CardView(card)
+                .padding(4)
+                .onTapGesture {
+                    game.choose(card) // here we are expressing user's intent to flip over a card
+                }
+        }
     }
 }
 
