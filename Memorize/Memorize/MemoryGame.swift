@@ -15,28 +15,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     // computed property handles potential bug of there being two faceup cards so that it doesn't get out of sync
     private var indexOfTheOneAndOnlyFaceUpCard: Int? {
-        get {
-            var faceUpCardIndices = [Int]()
-            for index in cards.indices {
-                if cards[index].isFaceUp {
-                    faceUpCardIndices.append(index)
-                }
-            }
-            if faceUpCardIndices.count == 1 {
-                return faceUpCardIndices.first
-            } else {
-                return nil
-            }
-        }
-        set {
-            for index in cards.indices {
-                if index != newValue {
-                    cards[index].isFaceUp = false
-                } else {
-                    cards[index].isFaceUp = true
-                }
-            }
-        }
+        get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
+        set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue) } }
     }
     
     mutating func choose(_ card: Card) { // mutating will allow this to change *because self is immutable*
@@ -72,5 +52,15 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isMatched = false
         let content: CardContent // better to use a "don't care" type here, instead of a String, for flexibility in the future
         let id: Int // for behaving like an Identifiable (a don't care, but needs to be hashable and equatable); Int is hashable
+    }
+}
+
+extension Array {
+    var oneAndOnly: Element? {
+        if count == 1 {
+            return first
+        } else {
+            return nil
+        }
     }
 }
