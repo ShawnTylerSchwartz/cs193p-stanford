@@ -12,7 +12,7 @@ struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGame // might instead call this something like 'game' instead of 'viewModel'
     
     var body: some View {
-            ScrollView {
+//            ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(viewModel.model.cards) { card in
                         CardView(card: card)
@@ -23,7 +23,7 @@ struct ContentView: View {
                             }
                     }
                 }
-            }
+//            }
             .foregroundColor(.red)
             .padding(.horizontal)
     }
@@ -40,6 +40,8 @@ struct CardView: View {
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 3)
                 Text(card.content).font(.largeTitle)
+            } else if card.isMatched {
+                shape.opacity(0)
             } else {
                 shape.fill()
             }
