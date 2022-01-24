@@ -36,8 +36,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
-        cards = Array<Card>()
-        
+        cards = []
         // add numberOfPairsOfCards x 2 to cards array (to get the pairs)
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = createCardContent(pairIndex)
@@ -47,8 +46,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     struct Card: Identifiable {
-        var isFaceUp: Bool = false // in the game all cards start face down
-        var isMatched: Bool = false
+        var isFaceUp = false // in the game all cards start face down
+        var isMatched = false
         let content: CardContent // better to use a "don't care" type here, instead of a String, for flexibility in the future
         let id: Int // for behaving like an Identifiable (a don't care, but needs to be hashable and equatable); Int is hashable
     }

@@ -15,6 +15,8 @@ import SwiftUI
 //    (i.e., once it's gone, the app/game is over)
 
 class EmojiMemoryGame: ObservableObject {
+    typealias Card = MemoryGame<String>.Card
+    
     private static let emojis = ["🐶", "🐱",  "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐷", "🐸", "🐵", "🐔", "🐧", "🐤", "🐣", "🦆", "🦉", "🐴", "🦄", "🦋", "🐠"]
     
     private static func createMemoryGame() -> MemoryGame<String> {
@@ -23,12 +25,12 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    @Published private(set) var model: MemoryGame<String> = createMemoryGame() // private(set) -> other classes and structs can look at the model but they can't change it
+    @Published private(set) var model = createMemoryGame() // private(set) -> other classes and structs can look at the model but they can't change it
     
     // MARK: - Intent(s)
     
     // we are hooking up the UI directly to this intent
-    func choose(_ card: MemoryGame<String>.Card) {
+    func choose(_ card: Card) {
         model.choose(card)
     }
 }

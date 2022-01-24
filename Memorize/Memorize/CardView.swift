@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CardView: View {
-    let card: MemoryGame<String>.Card // when you build a view, only pass in the minimum that it needs (i.e., here, only the card)
+    let card: EmojiMemoryGame.Card // when you build a view, only pass in the minimum that it needs (i.e., here, only the card)
     
     var body: some View {
         ZStack {
