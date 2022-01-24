@@ -15,7 +15,7 @@ struct EmojiMemoryGameView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(game.model.cards) { card in
-                        CardView(card: card)
+                        CardView(card)
                             .aspectRatio(2/3, contentMode: .fit)
                             .onTapGesture {
                                 // here we are expressing user's intent to flip over a card
