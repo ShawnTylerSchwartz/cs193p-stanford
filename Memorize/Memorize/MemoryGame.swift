@@ -49,7 +49,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Identifiable {
         var isFaceUp: Bool = false // in the game all cards start face down
         var isMatched: Bool = false
-        var content: CardContent // better to use a "don't care" type here, instead of a String, for flexibility in the future
-        var id: Int // for behaving like an Identifiable (a don't care, but needs to be hashable and equatable); Int is hashable
+        let content: CardContent // better to use a "don't care" type here, instead of a String, for flexibility in the future
+        let id: Int // for behaving like an Identifiable (a don't care, but needs to be hashable and equatable); Int is hashable
     }
 }

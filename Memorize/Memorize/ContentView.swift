@@ -12,7 +12,7 @@ struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGame // might instead call this something like 'game' instead of 'viewModel'
     
     var body: some View {
-//            ScrollView {
+            ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(viewModel.model.cards) { card in
                         CardView(card: card)
@@ -23,14 +23,13 @@ struct ContentView: View {
                             }
                     }
                 }
-//            }
+            }
             .foregroundColor(.red)
             .padding(.horizontal)
     }
 }
 
 struct CardView: View {
-    
     let card: MemoryGame<String>.Card // when you build a view, only pass in the minimum that it needs (i.e., here, only the card)
     
     var body: some View {
